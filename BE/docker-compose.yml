@@ -1,0 +1,36 @@
+services:
+  db:
+    image: mysql:8.0
+    container_name: mysql-db
+    restart: unless-stopped
+    environment:
+      MYSQL_ROOT_PASSWORD: Luan2004ab
+      MYSQL_DATABASE: intern_k22_vku
+      MYSQL_USER: root
+      MYSQL_PASSWORD: Luan2004ab
+    ports:
+      - "3306:3306"
+    volumes:
+      - mysql_data:/var/lib/mysql
+
+  fastapi:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: intern_k22_vku_project
+    restart: always
+    ports:
+      - "8000:8000"
+    depends_on:
+      - db
+    volumes:
+      - ./app:/app
+    environment:
+      - DB_HOST=db
+      - DB_PORT=3306
+      - DB_NAME=intern_k22_vku
+      - DB_USER=root
+      - DB_PASSWORD=Luan2004ab
+
+volumes:
+  mysql_data:

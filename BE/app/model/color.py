@@ -1,0 +1,19 @@
+from sqlalchemy import Column, BigInteger, String, Boolean, DateTime, Integer, Float, ForeignKey, Text
+from sqlalchemy.sql import func
+from app.config.database import Base
+
+class Color(Base):
+    """
+    Represents a color option for products.
+    Tracks color details and audit information.
+    """
+    __tablename__ = "color"
+
+    color_id = Column(BigInteger, primary_key=True, index=True, autoincrement=True)
+    color_name = Column(String(255), nullable=False, index=True)
+    created_by = Column(BigInteger)
+    created_at = Column(DateTime, default=func.now(), nullable=False)
+    updated_by = Column(BigInteger)
+    updated_at = Column(DateTime, onupdate=func.now())
+    deleted_by = Column(BigInteger)
+    deleted_at = Column(DateTime)
